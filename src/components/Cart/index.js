@@ -7,7 +7,6 @@ import CartListView from '../CartListView'
 import CartContext from '../../context/CartContext'
 import EmptyCartView from '../EmptyCartView'
 import CartSummary from '../CartSummary'
-
 import './index.css'
 
 const Cart = () => {
@@ -18,16 +17,13 @@ const Cart = () => {
     <CartContext.Consumer>
       {value => {
         const {cartList, removeAllCartItems} = value
-        const showEmptyView = cartList.length === 0
+        const showEmptyView = !cartList || cartList.length === 0
 
-        const totalAmount = cartList.reduce(
-          (acc, item) => acc + item.price * item.quantity,
-          0,
-        )
+        const totalAmount = showEmptyView
+          ? 0
+          : cartList.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
-        const onClickRemoveAll = () => {
-          removeAllCartItems()
-        }
+        const onClickRemoveAll = () => removeAllCartItems()
 
         const onConfirmOrder = close => {
           setOrderPlaced(true)
@@ -57,11 +53,15 @@ const Cart = () => {
                   <CartListView />
                   <CartSummary />
 
-                  {/* CHECKOUT POPUP */}
+                  {/* ✅ Only 1 Checkout Button */}
                   <Popup
                     modal
                     trigger={
-                      <button type="button" className="checkout-btn">
+                      <button
+                        type="button"
+                        className="checkout-btn"
+                        data-testid="checkout-button"
+                      >
                         Checkout
                       </button>
                     }
@@ -72,20 +72,16 @@ const Cart = () => {
 
                         <div className="payment-options">
                           <label>
-                            <input type="radio" disabled />
-                            Card
+                            <input type="radio" disabled /> Card
                           </label>
                           <label>
-                            <input type="radio" disabled />
-                            Net Banking
+                            <input type="radio" disabled /> Net Banking
                           </label>
                           <label>
-                            <input type="radio" disabled />
-                            UPI
+                            <input type="radio" disabled /> UPI
                           </label>
                           <label>
-                            <input type="radio" disabled />
-                            Wallet
+                            <input type="radio" disabled /> Wallet
                           </label>
                           <label>
                             <input
@@ -111,15 +107,16 @@ const Cart = () => {
                         >
                           Confirm Order
                         </button>
+
+                        {/* ✅ Success message inside popup */}
+                        {orderPlaced && (
+                          <p className="success-text">
+                            Your order has been placed successfully
+                          </p>
+                        )}
                       </div>
                     )}
                   </Popup>
-
-                  {orderPlaced && (
-                    <p className="success-text">
-                      Your order has been placed successfully
-                    </p>
-                  )}
                 </div>
               )}
             </div>

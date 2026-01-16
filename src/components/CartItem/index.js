@@ -26,7 +26,8 @@ const CartItem = props => {
             <img src={imageUrl} alt={title} className="cart-product-image" />
 
             <div className="cart-item-details-container">
-              <h1 className="cart-product-title">{title}</h1>
+              {/* ✅ Use <p> for product title */}
+              <p className="cart-product-title">{title}</p>
               <p className="cart-product-brand">by {brand}</p>
 
               <div className="cart-quantity-container">
