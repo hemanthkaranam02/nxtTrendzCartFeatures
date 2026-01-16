@@ -22,11 +22,8 @@ class LoginForm extends Component {
 
   onSubmitSuccess = jwtToken => {
     const {history} = this.props
-
-    Cookies.set('jwt_token', jwtToken, {
-      expires: 30,
-    })
-    history.replace('/')
+    Cookies.set('jwt_token', jwtToken, {expires: 30})
+    history.replace('/products') // ✅ Redirect to Products page
   }
 
   onSubmitFailure = errorMsg => {
@@ -42,8 +39,10 @@ class LoginForm extends Component {
       method: 'POST',
       body: JSON.stringify(userDetails),
     }
+
     const response = await fetch(url, options)
     const data = await response.json()
+
     if (response.ok === true) {
       this.onSubmitSuccess(data.jwt_token)
     } else {
@@ -51,29 +50,8 @@ class LoginForm extends Component {
     }
   }
 
-  renderPasswordField = () => {
-    const {password} = this.state
-
-    return (
-      <>
-        <label className="input-label" htmlFor="password">
-          PASSWORD
-        </label>
-        <input
-          type="password"
-          id="password"
-          className="password-input-field"
-          value={password}
-          onChange={this.onChangePassword}
-          placeholder="Password"
-        />
-      </>
-    )
-  }
-
   renderUsernameField = () => {
     const {username} = this.state
-
     return (
       <>
         <label className="input-label" htmlFor="username">
@@ -91,12 +69,32 @@ class LoginForm extends Component {
     )
   }
 
+  renderPasswordField = () => {
+    const {password} = this.state
+    return (
+      <>
+        <label className="input-label" htmlFor="password">
+          PASSWORD
+        </label>
+        <input
+          type="password"
+          id="password"
+          className="password-input-field"
+          value={password}
+          onChange={this.onChangePassword}
+          placeholder="Password"
+        />
+      </>
+    )
+  }
+
   render() {
     const {showSubmitError, errorMsg} = this.state
     const jwtToken = Cookies.get('jwt_token')
 
+    // ✅ Redirect already logged-in users
     if (jwtToken !== undefined) {
-      return <Redirect to="/" />
+      return <Redirect to="/products" />
     }
 
     return (

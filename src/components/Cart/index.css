@@ -78,4 +78,50 @@
   .cart-heading {
     font-size: 20px;
   }
+  .checkout-btn {
+  background-color: #0b69ff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.payment-popup {
+  padding: 20px;
+  width: 300px;
+}
+
+.popup-heading {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.payment-options label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.order-summary {
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.confirm-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 8px;
+}
+
+.confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.success-text {
+  color: green;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
 }

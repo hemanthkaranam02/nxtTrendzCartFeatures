@@ -1,4 +1,5 @@
 import CartItem from '../CartItem'
+import CartContext from '../../context/CartContext'
 
 const CartListView = () => (
   <CartContext.Consumer>
@@ -14,4 +15,5 @@ const CartListView = () => (
     }}
   </CartContext.Consumer>
 )
+
 export default CartListView
